@@ -15,11 +15,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'App',
 
-  data: () => ({
-    //
-  })
+  data: function () {
+    return {}
+  },
+  methods: {
+    ...mapActions({
+      downloadPosts: 'posts/downloadPosts'
+    })
+  },
+  beforeMount () {
+    this.downloadPosts('https://jsonplaceholder.typicode.com/posts')
+  }
 }
 </script>
