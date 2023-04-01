@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import URL from './assets/const/urlConst'
 export default {
   name: 'App',
 
@@ -27,8 +28,13 @@ export default {
       downloadPosts: 'posts/downloadPosts'
     })
   },
+  computed: {
+    ...mapGetters({
+      getPosts: 'posts/getPosts'
+    })
+  },
   beforeMount () {
-    this.downloadPosts('https://jsonplaceholder.typicode.com/posts')
+    this.downloadPosts(URL.POSTS)
   }
 }
 </script>

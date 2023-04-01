@@ -6,7 +6,7 @@ const posts = {
     posts: []
   },
   getters: {
-    posts: (state) => state.posts
+    getPosts: (state) => state.posts
   },
   mutations: {
     setPosts (state, value) {
