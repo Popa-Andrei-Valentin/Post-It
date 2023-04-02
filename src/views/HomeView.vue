@@ -6,7 +6,7 @@
 import postList from '../components/PostList'
 
 export default {
-  name: 'Home',
+  name: 'HomeView',
 
   components: {
     postList
