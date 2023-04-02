@@ -7,6 +7,16 @@ const POSTS = {
       body: 'Please contact support team, the posts cannot be loaded.',
       error: true
     },
+    NO_FOUND: (postId) => {
+      const response = {
+        userId: postId,
+        id: postId,
+        title: `Error: Post with ID '${postId}' cannot be found `,
+        body: 'Please try searching for an existing post',
+        error: true
+      }
+      return response
+    },
     API: (code, message) => {
       const response = {
         userId: 1,

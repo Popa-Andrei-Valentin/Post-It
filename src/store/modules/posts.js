@@ -5,11 +5,13 @@ const posts = {
   namespaced: true,
   state: {
     posts: [],
+    currentPost: [],
     loadingPosts: false
   },
   getters: {
     getPosts: (state) => state.posts,
-    getLoadingPosts: (state) => state.loadingPosts
+    getLoadingPosts: (state) => state.loadingPosts,
+    getCurrentPost: (state) => state.currentPost
   },
   mutations: {
     setPosts (state, value) {
@@ -17,6 +19,9 @@ const posts = {
     },
     setLoadingPosts (state, value) {
       state.loadingPosts = value
+    },
+    setCurrentPost (state, value) {
+      state.currentPost = value
     }
   },
   actions: {
@@ -41,6 +46,28 @@ const posts = {
           }
         })
       commit('setPosts', data)
+
+      commit('setLoadingPosts', false)
+    },
+
+    async findPost ({ state, commit }, postId) {
+      commit('setLoadingPosts', true)
+
+      if (state.posts.length < 1 || isNaN(postId)) {
+        commit('setCurrentPost', POSTS.ERROR.NO_LOAD(404))
+        commit('setLoadingPosts', false)
+        return
+      }
+
+      const found = state.posts.find((post) => post.id === Number(postId))
+
+      if (!found) {
+        commit('setCurrentPost', POSTS.ERROR.NO_FOUND(postId))
+        commit('setLoadingPosts', false)
+        return
+      }
+
+      commit('setCurrentPost', found)
 
       commit('setLoadingPosts', false)
     }
