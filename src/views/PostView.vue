@@ -22,7 +22,7 @@
       </v-col>
     </v-row>
     <!-- Comments Section -->
-    <v-row>
+    <v-row v-if="!getPost.error">
       <h4>Comments</h4>
       <br />
       <v-card class="overflow-auto" max-height="400" max-width="100%">

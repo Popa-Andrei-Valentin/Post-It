@@ -54,15 +54,15 @@ const posts = {
       commit('setLoadingPosts', true)
 
       if (state.posts.length < 1 || isNaN(postId)) {
-        commit('setCurrentPost', POSTS.ERROR.NO_LOAD(404))
+        commit('setCurrentPost', POSTS.ERROR.NO_FOUND(404))
         commit('setLoadingPosts', false)
         return
       }
 
       const found = state.posts.find((post) => post.id === Number(postId))
-
+      console.log('found', found)
       if (!found) {
-        commit('setCurrentPost', POSTS.ERROR.NO_LOAD)
+        commit('setCurrentPost', POSTS.ERROR.ERROR.NO_FOUND(404))
         commit('setLoadingPosts', false)
         return
       }
