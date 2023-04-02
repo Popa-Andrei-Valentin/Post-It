@@ -61,7 +61,6 @@ export default {
   },
   data: function () {
     return {}
-  },
-  computed: {}
+  }
 }
 </script>

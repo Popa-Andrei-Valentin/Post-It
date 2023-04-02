@@ -1,4 +1,5 @@
 import axios from 'axios'
+import POSTS from '@/assets/const/postsConst'
 
 const posts = {
   namespaced: true,
@@ -21,10 +22,17 @@ const posts = {
     async downloadPosts ({ commit }, url) {
       if (!url || typeof url !== 'string') return
 
-      const data = await axios.get(url).then((response, err) => {
-        if (response.data) return response.data
-        else throw err
-      })
+      const data = await axios
+        .get(url)
+        .then((response, err) => {
+          if (response.data) return response.data
+        })
+        .catch((err) => {
+          if (err) {
+            const postError = POSTS.ERROR.API(err.response.status, err.message)
+            return [postError]
+          }
+        })
       commit('setPosts', data)
     }
   }
