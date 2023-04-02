@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <!-- Renders List of Posts -->
     <v-row
       class="fill-height overflow-y-auto"
       v-if="list.length && !list[0].error"
