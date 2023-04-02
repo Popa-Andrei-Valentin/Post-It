@@ -21,6 +21,13 @@
         </p>
       </v-col>
     </v-row>
+    <!-- Action Section  -->
+    <v-row class="fill-height" v-if="!getPost.error">
+      <v-col align="center">
+        <v-btn color="green" class="ma-2">Edit</v-btn>
+        <v-btn color="red" class="ma-2">Delete</v-btn>
+      </v-col>
+    </v-row>
     <!-- Comments Section -->
     <v-row v-if="!getPost.error">
       <h4>Comments</h4>
