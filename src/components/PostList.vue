@@ -33,6 +33,7 @@
         </v-sheet>
       </v-col>
     </v-row>
+    <!-- In case of Error -->
     <v-row justify="center" class="fill-height fill-width pa-4" v-else>
       <v-card color="#f76159" v-for="post in list" :key="post.id">
         <v-card-title>{{ post.title }}</v-card-title>
