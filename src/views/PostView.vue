@@ -29,6 +29,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'PostView',
+
   data: function () {
     return {
       currentId: null
@@ -45,11 +46,13 @@ export default {
     // Set current Post that will be displayed
     this.setPost(this.currentId)
   },
+
   computed: {
     ...mapGetters({
       getPost: 'posts/getCurrentPost'
     })
   },
+
   methods: {
     ...mapActions({
       setPost: 'posts/findPost'
