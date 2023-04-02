@@ -4,14 +4,19 @@ import POSTS from '@/assets/const/postsConst'
 const posts = {
   namespaced: true,
   state: {
-    posts: []
+    posts: [],
+    loadingPosts: false
   },
   getters: {
-    getPosts: (state) => state.posts
+    getPosts: (state) => state.posts,
+    getLoadingPosts: (state) => state.loadingPosts
   },
   mutations: {
     setPosts (state, value) {
       state.posts = value
+    },
+    setLoadingPosts (state, value) {
+      state.loadingPosts = value
     }
   },
   actions: {
@@ -21,6 +26,8 @@ const posts = {
      */
     async downloadPosts ({ commit }, url) {
       if (!url || typeof url !== 'string') return
+
+      commit('setLoadingPosts', true)
 
       const data = await axios
         .get(url)
@@ -34,6 +41,8 @@ const posts = {
           }
         })
       commit('setPosts', data)
+
+      commit('setLoadingPosts', false)
     }
   }
 }

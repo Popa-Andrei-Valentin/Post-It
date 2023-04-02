@@ -1,5 +1,5 @@
 <template>
-  <post-list :list="getPosts" />
+  <post-list :list="getPosts" :loading="getLoading" />
 </template>
 
 <script>
@@ -14,7 +14,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getPosts: 'posts/getPosts'
+      getPosts: 'posts/getPosts',
+      getLoading: 'posts/getLoadingPosts'
     })
   }
 }

@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-row>
+      <v-progress-linear indeterminate :height="9" v-if="loading" />
+    </v-row>
     <!-- Renders List of Posts -->
     <v-row
       class="fill-height overflow-y-auto"
@@ -57,6 +60,10 @@ export default {
       type: Array,
       required: true,
       default: () => [POSTS.ERROR.NO_LOAD]
+    },
+    loading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data: function () {
