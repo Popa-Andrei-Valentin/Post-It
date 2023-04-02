@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
-        <h1>Post It?</h1>
+        <h1 class="logo" @click="goToHome">Post It?</h1>
       </div>
 
       <v-spacer></v-spacer>
@@ -17,6 +17,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import URL from './assets/const/urlConst'
+import router from './router'
+
 export default {
   name: 'App',
 
@@ -26,7 +28,11 @@ export default {
   methods: {
     ...mapActions({
       downloadPosts: 'posts/downloadPosts'
-    })
+    }),
+    // Return to home.
+    goToHome () {
+      router.push('/')
+    }
   },
   computed: {
     ...mapGetters({
@@ -38,3 +44,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.logo {
+  cursor: pointer;
+}
+</style>

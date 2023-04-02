@@ -25,7 +25,7 @@
             }"
             class="fill-height"
           >
-            <v-card class="fill-height" hover>
+            <v-card class="fill-height" @click="openPost(post.id)" hover>
               <v-col class="text-sm-left text-center">
                 <v-card-title>{{ post.title }}</v-card-title>
                 <v-card-text>
@@ -52,6 +52,7 @@
 
 <script>
 import POSTS from '../assets/const/postsConst'
+import router from '@/router'
 
 export default {
   name: 'postList',
@@ -68,6 +69,15 @@ export default {
   },
   data: function () {
     return {}
+  },
+  methods: {
+    /**
+     * Open Post in a new page.
+     * @param {number} target
+     */
+    openPost (target) {
+      router.push(`/post/${target}`)
+    }
   }
 }
 </script>
