@@ -26,6 +26,7 @@
 <script>
 import router from '@/router'
 import { mapActions, mapGetters } from 'vuex'
+import URL from '@/assets/const/urlConst'
 
 export default {
   name: 'PostView',
@@ -42,20 +43,23 @@ export default {
     })
   },
 
-  mounted () {
+  async mounted () {
     // Set current Post that will be displayed
     this.setPost(this.currentId)
+    await this.downloadComments(URL.COMMENTS(this.currentId))
   },
 
   computed: {
     ...mapGetters({
-      getPost: 'posts/getCurrentPost'
+      getPost: 'posts/getCurrentPost',
+      getComments: 'comments/getComments'
     })
   },
 
   methods: {
     ...mapActions({
-      setPost: 'posts/findPost'
+      setPost: 'posts/findPost',
+      downloadComments: 'comments/downloadComments'
     }),
     goToHome () {
       router.push('/')
@@ -63,6 +67,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .post-text {
   max-height: 350px;
