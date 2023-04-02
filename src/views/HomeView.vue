@@ -1,15 +1,15 @@
 <template>
-  <hello-world />
+  <post-list />
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld'
+import postList from '../components/PostList'
 
 export default {
   name: 'Home',
 
   components: {
-    HelloWorld
+    postList
   }
 }
 </script>
