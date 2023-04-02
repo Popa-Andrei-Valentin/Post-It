@@ -10,14 +10,14 @@
     <!-- Post Title -->
     <v-row class="fill-height overflow-y-auto">
       <v-col align="center" class="fill-height w-75">
-        <h1>{{ getPost.title }}</h1>
+        <h1 class="text-h1">{{ getPost.title }}</h1>
       </v-col>
     </v-row>
     <!-- Post Body/Content -->
     <v-row class="fill-height overflow-y-auto ma-2">
-      <v-col align="start" class="fill-height">
+      <v-col align="center" class="fill-height">
         <p class="post-text">
-          {{ getPost.body }}
+          {{ `"${getPost.body}"` }}
         </p>
       </v-col>
     </v-row>
@@ -90,5 +90,6 @@ export default {
 .post-text {
   max-height: 350px;
   overflow-y: auto;
+  font-size: 1.4rem;
 }
 </style>
