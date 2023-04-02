@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-col>
-      <v-btn color="blue" @click="goToHome">
+      <v-btn color="blue" @click="goBack">
         <v-icon start icon="mdi-arrow-left" />
         Back
       </v-btn>
@@ -61,8 +61,8 @@ export default {
       setPost: 'posts/findPost',
       downloadComments: 'comments/downloadComments'
     }),
-    goToHome () {
-      router.push('/')
+    goBack () {
+      router.go(-1)
     }
   }
 }
