@@ -62,7 +62,7 @@ const posts = {
       const found = state.posts.find((post) => post.id === Number(postId))
 
       if (!found) {
-        commit('setCurrentPost', POSTS.ERROR.NO_FOUND(postId))
+        commit('setCurrentPost', POSTS.ERROR.NO_LOAD)
         commit('setLoadingPosts', false)
         return
       }

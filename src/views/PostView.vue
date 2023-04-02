@@ -1,24 +1,42 @@
 <template>
   <v-container>
+    <!-- Back Button -->
     <v-col>
       <v-btn color="blue" @click="goBack">
         <v-icon start icon="mdi-arrow-left" />
         Back
       </v-btn>
     </v-col>
-
+    <!-- Post Title -->
     <v-row class="fill-height overflow-y-auto">
-      <v-col align="center" class="fill-height w-75"
-        ><h1>{{ getPost.title }}</h1></v-col
-      >
+      <v-col align="center" class="fill-height w-75">
+        <h1>{{ getPost.title }}</h1>
+      </v-col>
     </v-row>
-
+    <!-- Post Body/Content -->
     <v-row class="fill-height overflow-y-auto ma-2">
       <v-col align="start" class="fill-height">
         <p class="post-text">
           {{ getPost.body }}
         </p>
       </v-col>
+    </v-row>
+    <!-- Comments Section -->
+    <v-row>
+      <h4>Comments</h4>
+      <br />
+      <v-card class="overflow-auto" max-height="400" max-width="100%">
+        <v-list lines="three">
+          <v-list-item v-for="comment in getComments" :key="comment.id">
+            <v-list-item-content>
+              <v-list-item-title>{{ comment.email }}</v-list-item-title>
+              <v-list-item-subtitle class="text-wrap">{{
+                comment.body
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card>
     </v-row>
   </v-container>
 </template>
