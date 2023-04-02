@@ -25,7 +25,12 @@
     <v-row v-if="!getPost.error">
       <h4>Comments</h4>
       <br />
-      <v-card class="overflow-auto" max-height="400" max-width="100%">
+      <v-card
+        class="overflow-auto"
+        max-height="400"
+        max-width="100%"
+        v-if="!getLoadingComments"
+      >
         <v-list lines="three">
           <v-list-item v-for="comment in getComments" :key="comment.id">
             <v-list-item-content>
@@ -37,6 +42,7 @@
           </v-list-item>
         </v-list>
       </v-card>
+      <v-progress-linear indeterminate :height="9" v-else />
     </v-row>
   </v-container>
 </template>
@@ -70,7 +76,8 @@ export default {
   computed: {
     ...mapGetters({
       getPost: 'posts/getCurrentPost',
-      getComments: 'comments/getComments'
+      getComments: 'comments/getComments',
+      getLoadingComments: 'comments/getLoadingComments'
     })
   },
 
