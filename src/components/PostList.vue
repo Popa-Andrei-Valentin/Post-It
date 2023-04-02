@@ -34,7 +34,7 @@
       </v-col>
     </v-row>
     <v-row justify="center" class="fill-height fill-width pa-4" v-else>
-      <v-card v-for="post in list" :key="post.id">
+      <v-card color="#f76159" v-for="post in list" :key="post.id">
         <v-card-title>{{ post.title }}</v-card-title>
         <v-card-text>{{ post.body }}</v-card-text>
         <v-card-actions v-if="!post.error">
