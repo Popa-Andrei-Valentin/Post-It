@@ -15,7 +15,9 @@
 
     <v-row class="fill-height overflow-y-auto ma-2">
       <v-col align="start" class="fill-height">
-        <p>{{ getPost.body }}</p>
+        <p class="post-text">
+          {{ getPost.body }}
+        </p>
       </v-col>
     </v-row>
   </v-container>
@@ -58,3 +60,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.post-text {
+  max-height: 350px;
+  overflow-y: auto;
+}
+</style>
