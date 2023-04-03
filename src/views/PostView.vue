@@ -24,14 +24,27 @@
     <!-- Action Section  -->
     <v-row class="fill-height" v-if="!getPost.error">
       <v-col align="center">
-        <v-btn color="green" class="ma-2" @click="openEdit(getPost)"
+        <v-btn
+          color="green"
+          class="ma-2"
+          @click="openOverlay(getPost, 'overlay')"
           >Edit</v-btn
         >
-        <v-btn color="red" class="ma-2">Delete</v-btn>
+        <v-btn
+          color="red"
+          class="ma-2"
+          @click="openOverlay(getPost, 'showDelete')"
+          >Delete</v-btn
+        >
       </v-col>
     </v-row>
     <!-- Overlay Section (for editing post) -->
     <overlay-comp :overlay="overlay" @closeOverlay="overlay = false" />
+    <!-- Overlay Section (for deleting) -->
+    <overlay-delete-comp
+      :show-delete-popup="showDelete"
+      @closeOverlay="showDelete = false"
+    />
     <!-- Comments Section -->
     <v-row v-if="!getPost.error">
       <h4>Comments</h4>
@@ -64,16 +77,19 @@ import router from '@/router'
 import { mapActions, mapGetters } from 'vuex'
 import URL from '@/assets/const/urlConst'
 import OverlayComp from '@/components/OverlayComp.vue'
+import OverlayDeleteComp from '@/components/OverlayDelete.vue'
 
 export default {
   name: 'PostView',
   components: {
-    OverlayComp
+    OverlayComp,
+    OverlayDeleteComp
   },
   data: function () {
     return {
       currentId: null,
-      overlay: false
+      overlay: false,
+      showDelete: false
     }
   },
 
@@ -106,9 +122,11 @@ export default {
     goBack () {
       router.go(-1)
     },
-    openEdit (value) {
-      if (value.error) return (this.overlay = false)
-      this.overlay = true
+    openOverlay (value, variable) {
+      console.log('this', variable, this[variable])
+      if (!variable) return
+      if (value.error) return (this[variable] = false)
+      this[variable] = true
     }
   }
 }
