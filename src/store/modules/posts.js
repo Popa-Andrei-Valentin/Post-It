@@ -70,6 +70,26 @@ const posts = {
       commit('setCurrentPost', found)
 
       commit('setLoadingPosts', false)
+    },
+
+    /**
+     * Update current selected Post.
+     * @returns {object}
+     */
+    async updateCurrentPost ({ state, commit }, param) {
+      if (!state.currentPost || !state.currentPost.id) return 'error'
+
+      const toSend = {
+        id: state.currentPost.id,
+        title: param.title,
+        body: param.body,
+        userId: state.currentPost.userId
+      }
+      const update = await axios
+        .put(URL.SELECT_POST(state.currentPost.id))
+        .then((response) => response)
+
+      console.log('update', update)
     }
   }
 }
