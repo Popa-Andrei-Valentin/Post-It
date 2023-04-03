@@ -28,7 +28,7 @@
             :disabled="!newText && !newTitle"
             color="green"
             variant="text"
-            @click="dialog = false"
+            @click="saveModifications"
           >
             Save
           </v-btn>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'OverlayComp',
@@ -77,16 +77,26 @@ export default {
     ...mapGetters({ getPost: 'posts/getCurrentPost' })
   },
   methods: {
+    ...mapActions({ updatePost: 'posts/updateCurrentPost' }),
+
     closeOverlay () {
       this.$emit('closeOverlay')
     },
     textChange (value) {
       if (value === this.getPost.body) this.newText = false
-      else this.newText = true
+      else this.newText = value
     },
     titleChange (value) {
       if (value === this.getPost.title) this.newTitle = false
-      else this.newTitle = true
+      else this.newTitle = value
+    },
+    async saveModifications () {
+      if (!this.newText && !this.newTitle) return console.error('Cannot save')
+
+      const textToSend = this.newText ? this.newText : this.getPost.body
+      const titleToSend = this.newTitle ? this.newTitle : this.getPost.title
+
+      await this.updatePost({ title: titleToSend, body: textToSend })
     }
   }
 }
