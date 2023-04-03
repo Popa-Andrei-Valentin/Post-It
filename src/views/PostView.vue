@@ -30,6 +30,8 @@
         <v-btn color="red" class="ma-2">Delete</v-btn>
       </v-col>
     </v-row>
+    <!-- Overlay Section (for editing post) -->
+    <overlay-comp :overlay="overlay" @closeOverlay="overlay = false" />
     <!-- Comments Section -->
     <v-row v-if="!getPost.error">
       <h4>Comments</h4>
@@ -61,10 +63,13 @@
 import router from '@/router'
 import { mapActions, mapGetters } from 'vuex'
 import URL from '@/assets/const/urlConst'
+import OverlayComp from '@/components/OverlayComp.vue'
 
 export default {
   name: 'PostView',
-
+  components: {
+    OverlayComp
+  },
   data: function () {
     return {
       currentId: null,
@@ -82,6 +87,7 @@ export default {
     // Set current Post that will be displayed
     this.setPost(this.currentId)
     await this.downloadComments(URL.COMMENTS(this.currentId))
+    this.overlay = false
   },
 
   computed: {
