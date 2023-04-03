@@ -32,6 +32,9 @@
             @click="saveModifications"
           >
             Save
+            <v-icon v-if="getAxiosStatus">{{
+              getAxiosStatus === 200 ? 'mdi-check' : 'mdi-alert'
+            }}</v-icon>
           </v-btn>
         </v-card-actions>
       </v-form>
@@ -77,12 +80,18 @@ export default {
   computed: {
     ...mapGetters({
       getPost: 'posts/getCurrentPost',
-      getUpdatingPost: 'posts/getUpdatingPost'
+      getUpdatingPost: 'posts/getUpdatingPost',
+      getAxiosStatus: 'posts/getAxiosStatus'
     })
   },
   methods: {
-    ...mapActions({ updatePost: 'posts/updateCurrentPost' }),
-
+    ...mapActions({
+      updatePost: 'posts/updateCurrentPost',
+      disableAxiosStatus: 'posts/disableAxiosStatus'
+    }),
+    timeout (ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms))
+    },
     closeOverlay () {
       this.$emit('closeOverlay')
     },
@@ -101,6 +110,16 @@ export default {
       const titleToSend = this.newTitle ? this.newTitle : this.getPost.title
 
       await this.updatePost({ title: titleToSend, body: textToSend })
+
+      // To disable button
+      if (this.getAxiosStatus === 200) {
+        this.newText = false
+        this.newBody = false
+        // To show ok or alert sign
+        await this.timeout(1000)
+        this.closeOverlay()
+        this.disableAxiosStatus(null)
+      }
     }
   }
 }

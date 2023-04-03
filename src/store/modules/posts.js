@@ -8,13 +8,15 @@ const posts = {
     posts: [],
     currentPost: [],
     loadingPosts: false,
-    updatingPost: false
+    updatingPost: false,
+    axiosStatus: null
   },
   getters: {
     getPosts: (state) => state.posts,
     getLoadingPosts: (state) => state.loadingPosts,
     getCurrentPost: (state) => state.currentPost,
-    getUpdatingPost: (state) => state.updatingPost
+    getUpdatingPost: (state) => state.updatingPost,
+    getAxiosStatus: (state) => state.axiosStatus
   },
   mutations: {
     setPosts (state, value) {
@@ -28,6 +30,9 @@ const posts = {
     },
     setUpdatingPost (state, value) {
       state.updatingPost = value
+    },
+    setAxiosStatus (state, value) {
+      state.axiosStatus = value
     }
   },
   actions: {
@@ -98,8 +103,13 @@ const posts = {
 
       if (update.status === 200 && update.data) {
         await commit('setCurrentPost', update.data)
+        commit('setAxiosStatus', 200)
       }
       commit('setUpdatingPost', false)
+    },
+
+    disableAxiosStatus ({ commit }, value) {
+      commit('setAxiosStatus', value)
     }
   }
 }
