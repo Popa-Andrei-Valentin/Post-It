@@ -5,6 +5,7 @@
         <v-text-field
           :value="getPost.title"
           label="Post Title:"
+          @change="titleChange"
           :rules="titleRules"
         ></v-text-field>
         <v-spacer />
@@ -14,6 +15,7 @@
           variant="filled"
           label="Post Content"
           auto-grow
+          @change="textChange"
           :value="getPost.body"
           :rules="textBodyRules"
         ></v-textarea>
@@ -22,7 +24,12 @@
           <v-btn color="blue-darken-1" variant="text" @click="closeOverlay">
             Close
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+          <v-btn
+            :disabled="!newText && !newTitle"
+            color="green"
+            variant="text"
+            @click="dialog = false"
+          >
             Save
           </v-btn>
         </v-card-actions>
@@ -46,6 +53,8 @@ export default {
 
   data: function () {
     return {
+      newTitle: false,
+      newText: false,
       title: '',
       titleRules: [
         (value) => {
@@ -57,9 +66,9 @@ export default {
       textBody: '123',
       textBodyRules: [
         (value) => {
-          if (value?.length < 120) return true
+          if (value?.length < 250) return true
 
-          return 'Post cannot exceed 120 characters'
+          return 'Post cannot exceed 250 characters'
         }
       ]
     }
@@ -70,6 +79,14 @@ export default {
   methods: {
     closeOverlay () {
       this.$emit('closeOverlay')
+    },
+    textChange (value) {
+      if (value === this.getPost.body) this.newText = false
+      else this.newText = true
+    },
+    titleChange (value) {
+      if (value === this.getPost.title) this.newTitle = false
+      else this.newTitle = true
     }
   }
 }
