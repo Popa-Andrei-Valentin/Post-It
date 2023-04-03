@@ -1,18 +1,13 @@
 <template>
   <v-overlay v-if="overlay">
-    <v-sheet width="400" class="mx-6 pa-6">
-      <v-form fast-fail @submit.prevent v-click-outside="closeOverlay">
+    <v-sheet width="800" class="mx-6 pa-6">
+      <v-form fat-fail @submit.prevent v-click-outside="closeOverlay">
         <v-text-field
           v-model="title"
           label="Post Title:"
           :rules="titleRules"
         ></v-text-field>
-
-        <v-text-field
-          v-model="textBody"
-          label="Post Content:"
-          :rules="textBodyRules"
-        ></v-text-field>
+        <v-spacer />
         <v-textarea
           clearable
           name="input-7-1"
