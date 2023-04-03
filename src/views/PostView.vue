@@ -123,7 +123,6 @@ export default {
       router.go(-1)
     },
     openOverlay (value, variable) {
-      console.log('this', variable, this[variable])
       if (!variable) return
       if (value.error) return (this[variable] = false)
       this[variable] = true
