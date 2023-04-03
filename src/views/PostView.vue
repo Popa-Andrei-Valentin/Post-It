@@ -33,7 +33,7 @@
     <!-- Overlay Section (for editing post) -->
     <overlay-comp
       :overlay="overlay"
-      :post-content="overlayContent"
+      :post="getPost"
       @closeOverlay="overlay = false"
     />
     <!-- Comments Section -->
@@ -77,8 +77,7 @@ export default {
   data: function () {
     return {
       currentId: null,
-      overlay: false,
-      overlayContent: ''
+      overlay: false
     }
   },
 
@@ -114,7 +113,6 @@ export default {
     openEdit (value) {
       if (value.error) return (this.overlay = false)
       this.overlay = true
-      this.overlayContent = value.body
     }
   }
 }

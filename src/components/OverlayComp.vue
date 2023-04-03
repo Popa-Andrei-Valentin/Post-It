@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import POSTS from '@/assets/const/postsConst'
 export default {
   name: 'OverlayComp',
   props: {
@@ -40,10 +41,10 @@ export default {
       required: true,
       default: () => false
     },
-    postContent: {
-      type: String,
+    post: {
+      type: Object,
       required: true,
-      default: () => 'No post could be loaded'
+      default: () => POSTS.ERROR.NO_LOAD
     }
   },
 
@@ -68,8 +69,11 @@ export default {
     }
   },
   computed: {
+    postTitle () {
+      return this.post.title
+    },
     postBody () {
-      return this.postContent
+      return this.post.body
     }
   },
   methods: {
