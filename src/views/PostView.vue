@@ -31,11 +31,7 @@
       </v-col>
     </v-row>
     <!-- Overlay Section (for editing post) -->
-    <overlay-comp
-      :overlay="overlay"
-      :post="getPost"
-      @closeOverlay="overlay = false"
-    />
+    <overlay-comp :overlay="overlay" @closeOverlay="overlay = false" />
     <!-- Comments Section -->
     <v-row v-if="!getPost.error">
       <h4>Comments</h4>

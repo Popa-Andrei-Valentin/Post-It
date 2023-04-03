@@ -3,7 +3,7 @@
     <v-sheet width="800" class="mx-6 pa-6">
       <v-form fat-fail @submit.prevent v-click-outside="closeOverlay">
         <v-text-field
-          v-model="title"
+          :value="getPost.title"
           label="Post Title:"
           :rules="titleRules"
         ></v-text-field>
@@ -14,7 +14,7 @@
           variant="filled"
           label="Post Content"
           auto-grow
-          v-model="postBody"
+          :value="getPost.body"
           :rules="textBodyRules"
         ></v-textarea>
         <v-card-actions>
@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import POSTS from '@/assets/const/postsConst'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'OverlayComp',
   props: {
@@ -40,11 +41,6 @@ export default {
       type: Boolean,
       required: true,
       default: () => false
-    },
-    post: {
-      type: Object,
-      required: true,
-      default: () => POSTS.ERROR.NO_LOAD
     }
   },
 
@@ -55,26 +51,21 @@ export default {
         (value) => {
           if (value?.length > 3) return true
 
-          return 'First name must be at least 3 characters.'
+          return 'Title must be at least 3 characters.'
         }
       ],
       textBody: '123',
       textBodyRules: [
         (value) => {
-          if (/[^0-9]/.test(value)) return true
+          if (value?.length < 120) return true
 
-          return 'Last name can not contain digits.'
+          return 'Post cannot exceed 120 characters'
         }
       ]
     }
   },
   computed: {
-    postTitle () {
-      return this.post.title
-    },
-    postBody () {
-      return this.post.body
-    }
+    ...mapGetters({ getPost: 'posts/getCurrentPost' })
   },
   methods: {
     closeOverlay () {
