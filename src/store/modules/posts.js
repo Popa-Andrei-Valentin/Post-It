@@ -104,7 +104,7 @@ const posts = {
       if (update.status === 200 && update.data) {
         // Update posts array
         const posts = state.posts
-        const index = posts.map((obj) => obj.id).indexOf(state.currentPost.id)
+        const index = posts.map((obj) => obj.id).indexOf(state.currentPost.id) // get index of modified Post
 
         if (index !== -1) {
           posts[index] = update.data
