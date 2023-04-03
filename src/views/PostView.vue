@@ -24,14 +24,18 @@
     <!-- Action Section  -->
     <v-row class="fill-height" v-if="!getPost.error">
       <v-col align="center">
-        <v-btn color="green" class="ma-2" @click="overlay = !overlay"
+        <v-btn color="green" class="ma-2" @click="openEdit(getPost)"
           >Edit</v-btn
         >
         <v-btn color="red" class="ma-2">Delete</v-btn>
       </v-col>
     </v-row>
     <!-- Overlay Section (for editing post) -->
-    <overlay-comp :overlay="overlay" @closeOverlay="overlay = false" />
+    <overlay-comp
+      :overlay="overlay"
+      :post-content="overlayContent"
+      @closeOverlay="overlay = false"
+    />
     <!-- Comments Section -->
     <v-row v-if="!getPost.error">
       <h4>Comments</h4>
@@ -73,7 +77,8 @@ export default {
   data: function () {
     return {
       currentId: null,
-      overlay: false
+      overlay: false,
+      overlayContent: ''
     }
   },
 
@@ -105,6 +110,11 @@ export default {
     }),
     goBack () {
       router.go(-1)
+    },
+    openEdit (value) {
+      if (value.error) return (this.overlay = false)
+      this.overlay = true
+      this.overlayContent = value.body
     }
   }
 }
