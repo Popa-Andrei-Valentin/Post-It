@@ -26,6 +26,7 @@
           </v-btn>
           <v-btn
             :disabled="!newText && !newTitle"
+            :loading="getUpdatingPost"
             color="green"
             variant="text"
             @click="saveModifications"
@@ -74,7 +75,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ getPost: 'posts/getCurrentPost' })
+    ...mapGetters({
+      getPost: 'posts/getCurrentPost',
+      getUpdatingPost: 'posts/getUpdatingPost'
+    })
   },
   methods: {
     ...mapActions({ updatePost: 'posts/updateCurrentPost' }),
