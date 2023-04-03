@@ -102,12 +102,21 @@ const posts = {
         .then((response) => response)
 
       if (update.status === 200 && update.data) {
-        await commit('setCurrentPost', update.data)
-        commit('setAxiosStatus', 200)
+        // Update posts array
+        const posts = state.posts
+        const index = posts.map((obj) => obj.id).indexOf(state.currentPost.id)
+
+        if (index !== -1) {
+          posts[index] = update.data
+          commit('setPosts', posts)
+
+          // Update current post
+          await commit('setCurrentPost', update.data)
+          commit('setAxiosStatus', 200)
+        }
       }
       commit('setUpdatingPost', false)
     },
-
     disableAxiosStatus ({ commit }, value) {
       commit('setAxiosStatus', value)
     }
