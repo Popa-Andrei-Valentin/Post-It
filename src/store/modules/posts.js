@@ -22,6 +22,9 @@ const posts = {
     setPosts (state, value) {
       state.posts = value
     },
+    setFirstPost (state, value) {
+      state.posts.unshift(value)
+    },
     setLoadingPosts (state, value) {
       state.loadingPosts = value
     },
@@ -124,6 +127,7 @@ const posts = {
 
     async deleteCurrentPost ({ state, commit }) {
       if (!state.currentPost || !state.currentPost.id) return 'error'
+
       const update = await axios
         .delete(URL.SELECT_POST(state.currentPost.id))
         .then((response) => response)
@@ -138,6 +142,20 @@ const posts = {
           await commit('setPosts', posts)
           commit('setCurrentPost', [])
         }
+      }
+    },
+
+    async createPost ({ state, commit }, params) {
+      if (!params.userId || !params.title || !params.body) {
+        return console.error('Params sent for createPost are invalid')
+      }
+
+      const createPost = await axios
+        .post(URL.POSTS, params)
+        .then((response) => response)
+      if (createPost.status === 201 && createPost.data) {
+        // using unshift to prove that the new post has been added to the current list of posts
+        commit('setFirstPost', createPost.data)
       }
     },
 

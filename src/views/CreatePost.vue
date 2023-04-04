@@ -31,7 +31,7 @@
           :loading="getUpdatingPost"
           color="green"
           variant="text"
-          @click="createPost"
+          @click="sendData"
         >
           Save
           <v-icon v-if="getAxiosStatus">{{
@@ -71,18 +71,24 @@ export default {
   methods: {
     ...mapActions({
       updatePost: 'posts/updateCurrentPost',
-      disableAxiosStatus: 'posts/disableAxiosStatus'
+      disableAxiosStatus: 'posts/disableAxiosStatus',
+      createPost: 'posts/createPost'
     }),
     goBack () {
       router.go(-1)
     },
-    createPost () {
-      console.log('creating post !')
+    async sendData () {
+      const params = {
+        title: this.title,
+        body: this.textBody,
+        userId: 1
+      }
+      await this.createPost(params)
     }
   },
   computed: {
     ...mapGetters({
-      getPost: 'posts/getCurrentPost',
+      getPosts: 'posts/getPosts',
       getUpdatingPost: 'posts/getUpdatingPost',
       getAxiosStatus: 'posts/getAxiosStatus'
     }),
