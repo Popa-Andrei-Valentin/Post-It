@@ -27,7 +27,7 @@
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text"> Close </v-btn>
         <v-btn
-          :disabled="disableSaveBtn"
+          :disabled="disableSaveBtn || getAxiosStatus === 201"
           :loading="getUpdatingPost"
           color="green"
           variant="text"
@@ -87,7 +87,7 @@ export default {
         userId: 1
       }
       await this.createPost(params)
-      this.timeout(2000)
+      await this.timeout(1300)
       router.push('/')
     }
   },
