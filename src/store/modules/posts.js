@@ -149,14 +149,17 @@ const posts = {
       if (!params.userId || !params.title || !params.body) {
         return console.error('Params sent for createPost are invalid')
       }
-
+      commit('setUpdatingPost', true)
+      params.id = state.posts.length + 1
       const createPost = await axios
         .post(URL.POSTS, params)
         .then((response) => response)
       if (createPost.status === 201 && createPost.data) {
         // using unshift to prove that the new post has been added to the current list of posts
         commit('setFirstPost', createPost.data)
+        commit('setAxiosStatus', 201)
       }
+      commit('setUpdatingPost', false)
     },
 
     // Axios Status is used for loading elements

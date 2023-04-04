@@ -35,7 +35,7 @@
         >
           Save
           <v-icon v-if="getAxiosStatus">{{
-            getAxiosStatus === 200 ? 'mdi-check' : 'mdi-alert'
+            getAxiosStatus === 201 ? 'mdi-check' : 'mdi-alert'
           }}</v-icon>
         </v-btn>
       </v-card-actions>
@@ -77,6 +77,9 @@ export default {
     goBack () {
       router.go(-1)
     },
+    timeout (ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms))
+    },
     async sendData () {
       const params = {
         title: this.title,
@@ -84,6 +87,8 @@ export default {
         userId: 1
       }
       await this.createPost(params)
+      this.timeout(2000)
+      router.push('/')
     }
   },
   computed: {
