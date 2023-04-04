@@ -7,7 +7,7 @@
 
       <v-spacer></v-spacer>
 
-      <div class="d-flex align-center">
+      <div class="d-flex align-center" @click="goToCreate">
         <v-btn color="green">Create post</v-btn>
       </div>
     </v-app-bar>
@@ -37,6 +37,10 @@ export default {
     goToHome () {
       if (router.currentRoute.name === 'home') return
       router.push('/')
+    },
+    goToCreate () {
+      if (router.currentRoute.name === 'create-post') return
+      router.push('/create-post')
     }
   },
   computed: {
