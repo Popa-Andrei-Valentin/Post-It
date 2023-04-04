@@ -11,21 +11,23 @@
         v-model="title"
         label="Post Title:"
         :rules="titleRules"
+        variant="outlined"
       ></v-text-field>
       <v-spacer />
       <v-textarea
         clearable
         name="input-7-1"
-        variant="filled"
+        variant="outlined"
         label="Post Content"
         auto-grow
-        :value="textBody"
+        v-model="textBody"
         :rules="textBodyRules"
       ></v-textarea>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text"> Close </v-btn>
         <v-btn
+          :disabled="disableSaveBtn"
           :loading="getUpdatingPost"
           color="green"
           variant="text"
@@ -56,12 +58,12 @@ export default {
           return 'Title must be at least 3 characters.'
         }
       ],
-      textBody: '123',
+      textBody: '',
       textBodyRules: [
         (value) => {
-          if (value?.length < 250) return true
+          if (value?.length < 250 && value?.length > 5) return true
 
-          return 'Post cannot exceed 250 characters'
+          return 'Post cannot exceed 250 characters and be at least 5 characters long'
         }
       ]
     }
@@ -83,7 +85,14 @@ export default {
       getPost: 'posts/getCurrentPost',
       getUpdatingPost: 'posts/getUpdatingPost',
       getAxiosStatus: 'posts/getAxiosStatus'
-    })
+    }),
+
+    disableSaveBtn () {
+      return (
+        this.textBodyRules[0](this.textBody) !== true ||
+        this.titleRules[0](this.title) !== true
+      )
+    }
   }
 }
 </script>
