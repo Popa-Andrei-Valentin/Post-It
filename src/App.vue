@@ -6,6 +6,10 @@
       </div>
 
       <v-spacer></v-spacer>
+
+      <div class="d-flex align-center">
+        <v-btn color="green">Create post</v-btn>
+      </div>
     </v-app-bar>
 
     <v-main>
@@ -31,6 +35,7 @@ export default {
     }),
     // Return to home.
     goToHome () {
+      if (router.currentRoute.name === 'home') return
       router.push('/')
     }
   },
