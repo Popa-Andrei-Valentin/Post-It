@@ -89,7 +89,9 @@ const posts = {
      */
     async updateCurrentPost ({ state, commit }, param) {
       if (!state.currentPost || !state.currentPost.id) return 'error'
+
       commit('setUpdatingPost', true)
+
       const toSend = {
         id: state.currentPost.id,
         title: param.title,
@@ -112,11 +114,34 @@ const posts = {
 
           // Update current post
           await commit('setCurrentPost', update.data)
+
           commit('setAxiosStatus', 200)
         }
       }
+
       commit('setUpdatingPost', false)
     },
+
+    async deleteCurrentPost ({ state, commit }) {
+      if (!state.currentPost || !state.currentPost.id) return 'error'
+      const update = await axios
+        .delete(URL.SELECT_POST(state.currentPost.id))
+        .then((response) => response)
+
+      if (update.status === 200 && update.data) {
+        // Update posts array
+        const posts = state.posts
+        const index = posts.map((obj) => obj.id).indexOf(state.currentPost.id) // get index of modified Post
+
+        if (index !== -1) {
+          posts.splice(index, 1)
+          await commit('setPosts', posts)
+          commit('setCurrentPost', [])
+        }
+      }
+    },
+
+    // Axios Status is used for loading elements
     disableAxiosStatus ({ commit }, value) {
       commit('setAxiosStatus', value)
     }

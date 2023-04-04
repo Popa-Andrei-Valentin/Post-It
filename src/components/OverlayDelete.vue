@@ -1,6 +1,6 @@
 <template>
   <v-overlay v-if="showDeletePopup">
-    <v-sheet width="400" class="mx-6 pa-6">
+    <v-sheet width="200" class="mx-6 pa-6">
       <v-form fat-fail @submit.prevent v-click-outside="closeOverlay">
         <h4>Are you sure you want to delete ?</h4>
         <v-card-actions>
@@ -13,6 +13,9 @@
 </template>
 
 <script>
+import router from '@/router'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'OverlayDeleteComp',
   props: {
@@ -23,8 +26,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      deleteCurrentPost: 'posts/deleteCurrentPost'
+    }),
+
     closeOverlay () {
       this.$emit('closeOverlay')
+    },
+
+    deletePost () {
+      this.deleteCurrentPost()
+      router.go(-1)
     }
   }
 }
