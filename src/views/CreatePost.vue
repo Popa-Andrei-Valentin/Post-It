@@ -6,20 +6,84 @@
         Back
       </v-btn>
     </v-col>
+    <v-form fat-fail @submit.prevent>
+      <v-text-field
+        v-model="title"
+        label="Post Title:"
+        :rules="titleRules"
+      ></v-text-field>
+      <v-spacer />
+      <v-textarea
+        clearable
+        name="input-7-1"
+        variant="filled"
+        label="Post Content"
+        auto-grow
+        :value="textBody"
+        :rules="textBodyRules"
+      ></v-textarea>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue-darken-1" variant="text"> Close </v-btn>
+        <v-btn
+          :loading="getUpdatingPost"
+          color="green"
+          variant="text"
+          @click="createPost"
+        >
+          Save
+          <v-icon v-if="getAxiosStatus">{{
+            getAxiosStatus === 200 ? 'mdi-check' : 'mdi-alert'
+          }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+    </v-form>
   </v-container>
 </template>
 
 <script>
 import router from '@/router'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data: function () {
-    return {}
+    return {
+      title: '',
+      titleRules: [
+        (value) => {
+          if (value?.length > 3) return true
+
+          return 'Title must be at least 3 characters.'
+        }
+      ],
+      textBody: '123',
+      textBodyRules: [
+        (value) => {
+          if (value?.length < 250) return true
+
+          return 'Post cannot exceed 250 characters'
+        }
+      ]
+    }
   },
   methods: {
+    ...mapActions({
+      updatePost: 'posts/updateCurrentPost',
+      disableAxiosStatus: 'posts/disableAxiosStatus'
+    }),
     goBack () {
       router.go(-1)
+    },
+    createPost () {
+      console.log('creating post !')
     }
+  },
+  computed: {
+    ...mapGetters({
+      getPost: 'posts/getCurrentPost',
+      getUpdatingPost: 'posts/getUpdatingPost',
+      getAxiosStatus: 'posts/getAxiosStatus'
+    })
   }
 }
 </script>
